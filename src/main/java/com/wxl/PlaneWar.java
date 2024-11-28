@@ -11,15 +11,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class PlaneWar extends JFrame {
-    public int count = 0;
+    public int count;
     public static int score = 0;
     public static GameState currentState = GameState.NOT_STARTED;
     public BgObj bgObj = new BgObj(GameUtil.background, 0, -100,2);
-    public EliteEnemyObj eliteEnemyObj;
-    public  MyShipObj myShip = new MyShipObj(GameUtil.myShip, 200, 450, 32, 32, 0, this);
+    public ArrayList<EliteEnemyObj> eliteEnemyObjLists = new ArrayList<>();
+    public  MyShipObj myShip = new MyShipObj(GameUtil.myShip,30,200, 450, 32, 32, 0, this);
     public BossObj boss = null;
     public boolean bossBulletUp;
     public boolean isCountTime = false;
@@ -65,6 +66,7 @@ public class PlaneWar extends JFrame {
             }
         });
         System.out.println("主线程:"+Thread.currentThread().getName());
+        System.out.println(myShip.getHP());
         //启动游戏循环线程
         new Thread(() -> {
             CreateObj createObj = new CreateObj();
@@ -170,6 +172,7 @@ public class PlaneWar extends JFrame {
                     }
                     GameUtil.AllObjList.removeAll(GameUtil.removeObjList);
                     GameUtil.removeObjList.clear();
+
                     count++;
                 }
                 case PAUSED ->{
