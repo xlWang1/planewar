@@ -27,9 +27,19 @@ public class EnemyBulletObj extends GameObj {
             GameUtil.removeObjList.add(this);
         }
         if (getRec().intersects(this.frame.myShip.getRec())) {
-            g.drawImage(GameUtil.boom, this.x, this.y, this.frame);
-            GameUtil.drawString(g, "游戏失败", Color.RED, 36, 150, 300);
-            PlaneWar.currentState = GameState.GAME_OVER_FAILED;
+
+            this.frame.myShip.MyHP = (int) (this.frame.myShip.MyHP - this.attack);
+
+            if (this.frame.myShip.getHP() <= 0) {
+                g.drawImage(GameUtil.boom, this.x, this.y, this.frame);
+                GameUtil.drawString(g, "游戏失败", Color.RED, 36, 150, 300);
+                PlaneWar.currentState = GameState.GAME_OVER_FAILED;
+            }else {
+                g.drawImage(GameUtil.boom, this.x, this.y, this.frame);
+                setX(-2222);
+                setY(100);
+                GameUtil.removeObjList.add(this);
+            }
         }
         for (MyBulletObj myBullet : GameUtil.myBulletList) {
             if (getRec().intersects(myBullet.getRec())) {
