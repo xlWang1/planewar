@@ -44,7 +44,8 @@ public class GameUtil {
             myBulletLevel2 = loadInternalImage("/images/bullet/myBullet02.png");
             eneMyBulletLevel1 = loadInternalImage("/images/bullet/enemyBullet01.png");
             eneMyBulletLevel2 = loadInternalImage("/images/bullet/enemyBullet02.png");
-            background = loadInternalImage("/images/background.png");
+//            background = loadInternalImage("/images/background.png");
+            background = loadInternalImage("/images/bg.png");
             boom = loadInternalImage("/images/boom.png");
             boss = loadInternalImage("/images/ship/boss.png");
         } catch (IOException e) {

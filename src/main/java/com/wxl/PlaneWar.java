@@ -18,7 +18,9 @@ public class PlaneWar extends JFrame {
     public int count;
     public static int score = 0;
     public static GameState currentState = GameState.NOT_STARTED;
-    public BgObj bgObj = new BgObj(GameUtil.background, 0, -100,2);
+    public BgObj bgObj = new BgObj(GameUtil.background, 0, -475,2);
+//    public BgObj bgObj = new BgObj(GameUtil.background, 0, -100,2);
+
     public ArrayList<EliteEnemyObj> eliteEnemyObjLists = new ArrayList<>();
     public  MyShipObj myShip = new MyShipObj(GameUtil.myShip,30,200, 450, 32, 32, 0, this);
     public BossObj boss = null;
