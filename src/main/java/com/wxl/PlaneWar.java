@@ -7,6 +7,8 @@ import javax.sound.sampled.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -65,8 +67,26 @@ public class PlaneWar extends JFrame {
                 }
             }
         });
+        //添加鼠标点击事件监听器
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // 检查是否按下了空格键
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    // 切换游戏状态
+                    if (currentState == GameState.IN_PROGRESS) {
+                        currentState = GameState.PAUSED;
+                        repaint();
+
+                    } else if (currentState == GameState.PAUSED) {
+                        currentState = GameState.IN_PROGRESS;
+                        repaint();
+                    }
+                }
+            }
+        });
         System.out.println("主线程:"+Thread.currentThread().getName());
-        System.out.println(myShip.getHP());
+
         //启动游戏循环线程
         new Thread(() -> {
             CreateObj createObj = new CreateObj();
@@ -176,7 +196,7 @@ public class PlaneWar extends JFrame {
                     count++;
                 }
                 case PAUSED ->{
-                    gameTimer.stop();
+                    GameUtil.drawString(g, "游戏暂停", Color.YELLOW, 36, 150, 300);;
                 }
 
                 case GAME_OVER_FAILED -> GameUtil.drawString(g, "游戏失败", Color.YELLOW, 36, 150, 300);
