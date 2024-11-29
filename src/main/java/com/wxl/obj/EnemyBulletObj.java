@@ -27,7 +27,7 @@ public class EnemyBulletObj extends GameObj {
             GameUtil.removeObjList.add(this);
         }
         if (getRec().intersects(this.frame.myShip.getRec())) {
-
+            System.out.println("被击中了");
             this.frame.myShip.MyHP = (int) (this.frame.myShip.MyHP - this.attack);
 
             if (this.frame.myShip.getHP() <= 0) {

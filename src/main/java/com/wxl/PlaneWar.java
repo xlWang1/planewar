@@ -9,9 +9,12 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class PlaneWar extends JFrame {
@@ -85,7 +88,7 @@ public class PlaneWar extends JFrame {
                 }
             }
         }).start();
-        GetPropertityFromFile.getPropertity();
+//        GetPropertityFromFile.getPropertity();
         playMusic(GetPropertityFromFile.bakcGroundMusic);
         playFireSound(GetPropertityFromFile.shootMusic);
 
@@ -96,10 +99,12 @@ public class PlaneWar extends JFrame {
     private void playFireSound(String filePath) {
         new Thread(() -> {
             System.out.println("播放开火线程:" + Thread.currentThread().getName());
-            try {
+            try(InputStream resourceAsStream = PlaneWar.class.getResourceAsStream(filePath);
+                BufferedInputStream bufferedStream = new BufferedInputStream(Objects.requireNonNull(resourceAsStream))) {
                 // 加载音频文件
-                File soundFile = new File(filePath);
-                AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+                // 使用 BufferedInputStream 包装输入流
+                // 将输入流转换为 AudioInputStream
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(Objects.requireNonNull(bufferedStream));
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioIn);
                 //每两秒播放一次音效
@@ -129,10 +134,10 @@ public class PlaneWar extends JFrame {
         // 等待音乐播放完毕
         Thread musicThread = new Thread(() -> {
             System.out.println("播放背景音乐线程:" + Thread.currentThread().getName());
-            try {
+            try(InputStream resourceAsStream = PlaneWar.class.getResourceAsStream(filePath);
+                BufferedInputStream bufferedStream = new BufferedInputStream(Objects.requireNonNull(resourceAsStream))) {
                 // 加载音频文件
-                File soundFile = new File(filePath);
-                AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(Objects.requireNonNull(bufferedStream));
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioIn);
 

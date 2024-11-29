@@ -34,20 +34,21 @@ public class GameUtil {
 
     // 静态代码块，用于加载图片资源
     static {
+        GetPropertityFromFile.getPropertity();
         try {
-            myShip = loadInternalImage("/images/ship/myShip.png");
-            enemyShip1 = loadInternalImage("/images/ship/enemyShip01.png");
-            enemyShip2 = loadInternalImage("/images/ship/enemyShip02.png");
-            enemyShip3 = loadInternalImage("/images/ship/enemyShip03.png");
-            eliteEnemyShip1 = loadInternalImage("/images/ship/eliteEnemy01.png");
-            myBulletLevel1 = loadInternalImage("/images/bullet/myBullet01.png");
-            myBulletLevel2 = loadInternalImage("/images/bullet/myBullet02.png");
-            eneMyBulletLevel1 = loadInternalImage("/images/bullet/enemyBullet01.png");
-            eneMyBulletLevel2 = loadInternalImage("/images/bullet/enemyBullet02.png");
+            myShip = loadInternalImage(GetPropertityFromFile.myShip);
+            enemyShip1 = loadInternalImage(GetPropertityFromFile.enemyShip1);
+            enemyShip2 = loadInternalImage(GetPropertityFromFile.enemyShip2);
+            enemyShip3 = loadInternalImage(GetPropertityFromFile.enemyShip3);
+            eliteEnemyShip1 = loadInternalImage(GetPropertityFromFile.eliteEnemyShip1);
+            myBulletLevel1 = loadInternalImage(GetPropertityFromFile.myBulletLevel1);
+            myBulletLevel2 = loadInternalImage(GetPropertityFromFile.myBulletLevel2);
+            eneMyBulletLevel1 = loadInternalImage(GetPropertityFromFile.eneMyBulletLevel1);
+            eneMyBulletLevel2 = loadInternalImage(GetPropertityFromFile.eneMyBulletLevel2);
 //            background = loadInternalImage("/images/background.png");
-            background = loadInternalImage("/images/bg.png");
-            boom = loadInternalImage("/images/boom.png");
-            boss = loadInternalImage("/images/ship/boss.png");
+            background = loadInternalImage(GetPropertityFromFile.backGround);
+            boom = loadInternalImage(GetPropertityFromFile.boom);
+            boss = loadInternalImage(GetPropertityFromFile.boss);
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("图片加载失败");
