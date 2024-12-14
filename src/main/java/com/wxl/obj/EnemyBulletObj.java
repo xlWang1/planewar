@@ -29,6 +29,7 @@ public class EnemyBulletObj extends GameObj {
         if (getRec().intersects(this.frame.myShip.getRec())) {
             System.out.println("被击中了");
             this.frame.myShip.MyHP = (int) (this.frame.myShip.MyHP - this.attack);
+            System.out.println("被敌方子弹击中当前剩余血量：" + this.frame.myShip.MyHP);
 
             if (this.frame.myShip.getHP() <= 0) {
                 g.drawImage(GameUtil.boom, this.x, this.y, this.frame);
