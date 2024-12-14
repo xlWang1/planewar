@@ -9,7 +9,7 @@ public enum GameState {
     GAME_OVER_FAILED(3),  // 游戏通关失败
     GAME_OVER_SUCCESS(4);  // 游戏通关成功
 
-    private int stateCode;
+    private final int  stateCode;
 
     GameState(int stateCode) {
         this.stateCode = stateCode;

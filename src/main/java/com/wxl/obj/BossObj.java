@@ -71,10 +71,4 @@ public class BossObj extends GameObj {
         return super.getRec();
     }
 
-
-    public static void main(String[] args) {
-        BossObj bossObj = new BossObj(GameUtil.boss, 0, 0, GameUtil.boss.getWidth(), GameUtil.boss.getHeight(), 5, null, 100);
-        System.out.println(bossObj.BossMAXHp);
-        System.out.println(bossObj.BossHp);
-    }
 }

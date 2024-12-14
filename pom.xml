@@ -7,6 +7,15 @@
     <groupId>wxl.planewar</groupId>
     <artifactId>PlaneWar</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <organization>
+        <name>黄油小作坊</name>
+    </organization>
+
+    <inceptionYear>2024</inceptionYear>
+
+    <description>飞机大战</description>
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -25,22 +34,46 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.1</version>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix><!-- 指定类路径前缀 -->
+                            <mainClass>com.wxl.App</mainClass> <!-- 指定主类 -->
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <version>2.5.2</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
                         <goals>
-                            <goal>shade</goal>
+                            <goal>launch4j</goal>
                         </goals>
                         <configuration>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">                  <mainClass>cn.edu.university.App</mainClass>
-                                </transformer>
-                            </transformers>
+                            <jre>
+                                <path>%JAVA_HOME%</path> <!-- 设置 JRE 路径 -->
+                            </jre>
+                            <jar>${project.build.directory}/${project.build.finalName}.jar</jar>
+                            <outfile>${project.build.finalName}.exe</outfile>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                    <encoding>UTF-8</encoding> <!-- 指定编码为 UTF-8 -->
+                </configuration>
             </plugin>
         </plugins>
     </build>

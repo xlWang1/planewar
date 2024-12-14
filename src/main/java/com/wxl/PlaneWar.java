@@ -7,6 +7,8 @@ import javax.sound.sampled.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedInputStream;
@@ -18,13 +20,14 @@ import java.util.Objects;
 
 
 public class PlaneWar extends JFrame {
+    public static int width = 480;
+    public static int height = 600;
     public int count;
     public static int score = 0;
     public static GameState currentState = GameState.NOT_STARTED;
-    public BgObj bgObj = new BgObj(GameUtil.background, 0, -475,2);
+    public BgObj bgObj = new BgObj(GameUtil.background, 0, height-GameUtil.background.getHeight(),2);
 //    public BgObj bgObj = new BgObj(GameUtil.background, 0, -100,2);
 
-    public ArrayList<EliteEnemyObj> eliteEnemyObjLists = new ArrayList<>();
     public  MyShipObj myShip = new MyShipObj(GameUtil.myShip,30,200, 450, 32, 32, 0, this);
     public BossObj boss = null;
     public boolean bossBulletUp;
@@ -38,8 +41,6 @@ public class PlaneWar extends JFrame {
      */
     public void launch() {
        String title = "飞机大战";
-       int width = 480;
-       int height = 600;
        String  fontName = "仿宋";
         // 设置窗口标题
         setTitle(title);
@@ -70,12 +71,24 @@ public class PlaneWar extends JFrame {
                 }
             }
         });
-        System.out.println("主线程:"+Thread.currentThread().getName());
-        System.out.println(myShip.getHP());
+        //添加键盘事件，按下空格键游戏暂停
+        addKeyListener( new KeyAdapter(){
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == 32) {
+                    if (currentState == GameState.IN_PROGRESS) {
+                        currentState = GameState.PAUSED;
+                        repaint();
+                    } else if (currentState == GameState.PAUSED) {
+                        currentState = GameState.IN_PROGRESS;
+                        repaint();
+                    }
+                }
+            }
+        });
         //启动游戏循环线程
         new Thread(() -> {
             CreateObj createObj = new CreateObj();
-            System.out.println("创建对象线程:" + Thread.currentThread().getName());
             while (true) {
                 if (currentState == GameState.IN_PROGRESS){
                     createObj.createObj(this);
@@ -88,7 +101,6 @@ public class PlaneWar extends JFrame {
                 }
             }
         }).start();
-//        GetPropertityFromFile.getPropertity();
         playMusic(GetPropertityFromFile.bakcGroundMusic);
         playFireSound(GetPropertityFromFile.shootMusic);
 
@@ -113,7 +125,7 @@ public class PlaneWar extends JFrame {
                         Thread.sleep(300);
                         clip.setFramePosition(0);
                         clip.start();
-                    }else if (currentState == GameState.GAME_OVER_FAILED || currentState == GameState.GAME_OVER_SUCCESS) {
+                    }else if (currentState == GameState.GAME_OVER_FAILED || currentState == GameState.GAME_OVER_SUCCESS || currentState == GameState.PAUSED) {
                         break;
                     }else {
                        Thread.sleep(1000);
@@ -183,7 +195,8 @@ public class PlaneWar extends JFrame {
                     count++;
                 }
                 case PAUSED ->{
-                    gameTimer.stop();
+                    g.drawImage(GameUtil.background, 0, 0, this);
+                    GameUtil.drawString(g, "游戏暂停", Color.YELLOW, 36, 150, 300);
                 }
 
                 case GAME_OVER_FAILED -> GameUtil.drawString(g, "游戏失败", Color.YELLOW, 36, 150, 300);
